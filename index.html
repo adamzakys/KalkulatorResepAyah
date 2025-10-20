@@ -3,92 +3,142 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kalkulator Resep Jajanan</title>
-
-    <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#007bff" />
-
+    <title>Catatan & Hitungan Resep</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff"/>
   </head>
   <body>
-    <div id="app">
-      <h1>📝 Kalkulator Resep Jajanan</h1>
-
-      <div id="input-section" class="card">
-        <h2 id="form-title">Buat Resep Baru</h2>
-
-        <div class="input-group">
-          <label for="recipe-title">Judul Resep</label>
-          <input type="text" id="recipe-title" placeholder="Masukkan Judul Resep" />
-        </div>
-
-        <div class="input-group">
-          <label>Tipe Resep</label>
-          <div class="recipe-type-selector">
-            <input type="radio" id="type-main" name="recipe-type" value="main" checked />
-            <label for="type-main">Resep Utama</label>
-            <input type="radio" id="type-calculated" name="recipe-type" value="calculated" />
-            <label for="type-calculated">Resep Hitungan</label>
-          </div>
-        </div>
-
-        <h3>Bahan-Bahan</h3>
-        <div id="ingredients-list"></div>
-        <button id="add-ingredient">+ Tambah Bahan</button>
-
-        <hr />
-
-        <button id="calculate-total">Hitung Total Berat Awal</button>
-        <div class="total-display">
-          <h3 id="total-weight-display">Total Berat Awal: 0 kg</h3>
-          <select id="total-unit-selector" class="unit-selector">
-            <option value="kg">kilogram (kg)</option>
-            <option value="g">gram (g)</option>
-            <option value="oz">ons</option>
-          </select>
-        </div>
-
-        <div id="scaling-section">
-          <h3>Skalakan Resep</h3>
-          <select id="scale-operation">
-            <option value="multiply">Kali (x)</option>
-            <option value="divide">Bagi (÷)</option>
-          </select>
-          <input type="number" id="scale-factor" placeholder="contoh: 2" value="1" min="0" />
-          <button id="generate-scaled">Hasilkan Perhitungan</button>
-        </div>
-
-        <div id="result-section" class="card">
-          <h3>Hasil Resep Skala Baru</h3>
-          <div class="total-display">
-            <h4 id="scaled-total-weight-display"></h4>
-            <select id="result-unit-selector" class="unit-selector">
-              <option value="kg">kilogram (kg)</option>
-              <option value="g">gram (g)</option>
-              <option value="oz">ons</option>
-            </select>
-          </div>
-          <div id="scaled-recipe-display">
-            <p>Hasil perhitungan akan muncul di sini.</p>
-          </div>
-        </div>
-
-        <button id="save-recipe">Simpan Resep Ini</button>
-        <button id="cancel-edit" class="hidden">Batal Edit</button>
-      </div>
-
-      <div id="saved-recipes-section" class="card">
-        <h2>📚 Resep Tersimpan</h2>
-        <div class="tabs">
-          <button id="tab-utama" class="tab-button active">Resep Utama</button>
-          <button id="tab-hitungan" class="tab-button">Resep Hitungan</button>
-        </div>
-        <div id="saved-recipes-list">
-          <p>Belum ada resep yang disimpan.</p>
-        </div>
+    <div id="login-overlay">
+      <div class="login-box">
+        <h2>Login</h2>
+        <p>Masukkan password untuk melanjutkan</p>
+        <input type="password" id="password-input" placeholder="Password" />
+        <button id="login-button">Masuk</button>
       </div>
     </div>
 
+    <div id="app" class="hidden">
+      <h1>📝 Catatan & Hitungan Resep</h1>
+
+      <div class="main-nav">
+        <button class="main-nav-button active" data-tab="resep">📚 Resep</button>
+        <button class="main-nav-button" data-tab="buat">➕ Buat</button>
+        <button class="main-nav-button" data-tab="bahan">🌿 Bahan Baku</button>
+      </div>
+
+      <div id="resep-section" class="content-section active">
+        <div class="card">
+          <div class="input-group">
+            <input type="search" id="search-recipe-input" placeholder="🔍 Cari nama resep..." />
+          </div>
+          <div class="tabs">
+            <button id="tab-utama" class="tab-button active">Resep Utama</button>
+            <button id="tab-hitungan" class="tab-button">Resep Hitungan</button>
+          </div>
+          <div id="saved-recipes-list">
+            <p>Belum ada resep yang disimpan.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="buat-section" class="content-section">
+        <div class="card">
+          <h2 id="form-title">Buat Resep Baru</h2>
+          <div class="input-group">
+            <label for="recipe-title">Judul Resep</label>
+            <input type="text" id="recipe-title" placeholder="Masukkan Judul Resep" />
+          </div>
+          <div class="input-group">
+            <label>Tipe Resep</label>
+            <div class="recipe-type-selector">
+              <input type="radio" id="type-main" name="recipe-type" value="main" checked />
+              <label for="type-main">Resep Utama</label>
+              <input type="radio" id="type-calculated" name="recipe-type" value="calculated" />
+              <label for="type-calculated">Resep Hitungan</label>
+            </div>
+          </div>
+          <h3>Bahan-Bahan</h3>
+          <div id="ingredients-list"></div>
+          <datalist id="bahan-list"></datalist>
+          <button id="add-ingredient" class="btn-success">+ Tambah Bahan</button>
+          <hr />
+          <button id="calculate-total" class="btn-info">Hitung Total Berat Awal</button>
+          <div class="total-display">
+            <h3 id="total-weight-display">Total Berat Awal: 0 kg</h3>
+            <select id="total-unit-selector" class="unit-selector">
+              <option value="kg">kg</option>
+              <option value="g">gram</option>
+              <option value="oz">ons</option>
+            </select>
+          </div>
+          <div id="scaling-section">
+            <h3>Skalakan Resep</h3>
+            <select id="scale-operation">
+              <option value="multiply">Kali (x)</option>
+              <option value="divide">Bagi (÷)</option>
+            </select>
+            <input type="number" id="scale-factor" placeholder="contoh: 2" value="1" min="0" />
+            <button id="generate-scaled" class="btn-info">Hasilkan Perhitungan</button>
+          </div>
+          <div id="result-section" class="card">
+            <h3>Hasil Resep Skala Baru</h3>
+            <div class="total-display">
+              <h4 id="scaled-total-weight-display"></h4>
+              <select id="result-unit-selector" class="unit-selector">
+                <option value="kg">kg</option>
+                <option value="g">gram</option>
+                <option value="oz">ons</option>
+              </select>
+            </div>
+            <div id="scaled-recipe-display">
+              <p>Hasil perhitungan akan muncul di sini.</p>
+            </div>
+          </div>
+          <button id="save-recipe" class="btn-primary btn-full">Simpan Resep Ini</button>
+          <button id="save-as-copy" class="btn-purple btn-full hidden">Simpan Sebagai Salinan Baru</button>
+          <button id="cancel-edit" class="btn-secondary btn-full hidden">Batal Edit</button>
+        </div>
+      </div>
+
+      <div id="bahan-section" class="content-section">
+        <div class="card">
+          <h2>Manajemen Bahan Baku</h2>
+          <p>Tambah atau hapus bahan baku dari daftar utama.</p>
+          <div class="input-group">
+            <label for="new-ingredient-input">Tambah Bahan Baru</label>
+            <div class="add-ingredient-form">
+              <input type="text" id="new-ingredient-input" placeholder="Contoh: Ekstrak Vanila" />
+              <button id="add-new-ingredient-btn" class="btn-success">Tambah</button>
+            </div>
+          </div>
+          <hr />
+          <h3>Daftar Bahan Saat Ini</h3>
+          <div class="input-group">
+            <input type="search" id="search-ingredient-input" placeholder="🔍 Cari nama bahan..." />
+          </div>
+          <ul id="master-ingredient-list-ui"></ul>
+        </div>
+      </div>
+
+      <footer>
+        <p>Developed by: <a href="mailto:adamzaky.dy@gmail.com">adamzaky.dy@gmail.com</a></p>
+      </footer>
+    </div>
+
     <script src="app.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker Terdaftar: ', registration.scope);
+                })
+                .catch(err => {
+                    console.log('Pendaftaran ServiceWorker Gagal: ', err);
+                });
+        });
+    }
+</script>
   </body>
 </html>
