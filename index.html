@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator Resep Jajanan</title>
+
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#007bff" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>📝 Kalkulator Resep Jajanan</h1>
+
+      <div id="input-section" class="card">
+        <h2 id="form-title">Buat Resep Baru</h2>
+
+        <div class="input-group">
+          <label for="recipe-title">Judul Resep</label>
+          <input type="text" id="recipe-title" placeholder="Masukkan Judul Resep" />
+        </div>
+
+        <div class="input-group">
+          <label>Tipe Resep</label>
+          <div class="recipe-type-selector">
+            <input type="radio" id="type-main" name="recipe-type" value="main" checked />
+            <label for="type-main">Resep Utama</label>
+            <input type="radio" id="type-calculated" name="recipe-type" value="calculated" />
+            <label for="type-calculated">Resep Hitungan</label>
+          </div>
+        </div>
+
+        <h3>Bahan-Bahan</h3>
+        <div id="ingredients-list"></div>
+        <button id="add-ingredient">+ Tambah Bahan</button>
+
+        <hr />
+
+        <button id="calculate-total">Hitung Total Berat Awal</button>
+        <div class="total-display">
+          <h3 id="total-weight-display">Total Berat Awal: 0 kg</h3>
+          <select id="total-unit-selector" class="unit-selector">
+            <option value="kg">kilogram (kg)</option>
+            <option value="g">gram (g)</option>
+            <option value="oz">ons</option>
+          </select>
+        </div>
+
+        <div id="scaling-section">
+          <h3>Skalakan Resep</h3>
+          <select id="scale-operation">
+            <option value="multiply">Kali (x)</option>
+            <option value="divide">Bagi (÷)</option>
+          </select>
+          <input type="number" id="scale-factor" placeholder="contoh: 2" value="1" min="0" />
+          <button id="generate-scaled">Hasilkan Perhitungan</button>
+        </div>
+
+        <div id="result-section" class="card">
+          <h3>Hasil Resep Skala Baru</h3>
+          <div class="total-display">
+            <h4 id="scaled-total-weight-display"></h4>
+            <select id="result-unit-selector" class="unit-selector">
+              <option value="kg">kilogram (kg)</option>
+              <option value="g">gram (g)</option>
+              <option value="oz">ons</option>
+            </select>
+          </div>
+          <div id="scaled-recipe-display">
+            <p>Hasil perhitungan akan muncul di sini.</p>
+          </div>
+        </div>
+
+        <button id="save-recipe">Simpan Resep Ini</button>
+        <button id="cancel-edit" class="hidden">Batal Edit</button>
+      </div>
+
+      <div id="saved-recipes-section" class="card">
+        <h2>📚 Resep Tersimpan</h2>
+        <div class="tabs">
+          <button id="tab-utama" class="tab-button active">Resep Utama</button>
+          <button id="tab-hitungan" class="tab-button">Resep Hitungan</button>
+        </div>
+        <div id="saved-recipes-list">
+          <p>Belum ada resep yang disimpan.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
