@@ -1,6 +1,6 @@
 {
   "name": "Kalkulator Resep",
-  "short_name": "ResepCalc",
+  "short_name": "Kalkulator Resep Ayah",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#eef2f5",
