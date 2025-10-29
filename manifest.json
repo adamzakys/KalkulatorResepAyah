@@ -1,11 +1,11 @@
 {
-  "name": "Kalkulator Resep",
-  "short_name": "Kalkulator Resep Ayah",
+  "name": "Kalkulator Resep Ayah",
+  "short_name": "ResepCalc",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#eef2f5",
   "theme_color": "#007bff",
-  "description": "Aplikasi untuk menghitung dan menyimpan skala resep Ayah.",
+  "description": "Aplikasi kalkulator dan manajemen resep Ayah.",
   "icons": [
     {
       "src": "icon-192.png",

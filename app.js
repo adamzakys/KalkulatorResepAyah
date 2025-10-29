@@ -1,42 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const DAFTAR_BAHAN_BAKU_DEFAULT = [
-    "Aji Plus",
-    "Air",
-    "Baking Powder",
-    "Beras Jagung",
-    "BS Astor Coklat",
-    "Citric Acid",
-    "Cocoa N6",
-    "Cocoa Powder 301",
-    "Coconut",
-    "Dextrose",
-    "Flavour Chocolate 70Fm093883",
-    "Flavour Coklat Baru",
-    "Garam",
-    "Gula",
-    "Jagung",
-    "Lecithin",
-    "Maltodextrine",
-    "Margarin Menara Classic",
-    "Milk Bubuk",
-    "Milk Flavour",
-    "Minyak",
-    "Pandan Flavour",
-    "Pewarna",
-    "Pewarna Coklat",
-    "Pewarna Pandan",
-    "Pewarna Sunset Yellow",
-    "Plastik Dorong",
-    "Sari Manis",
-    "Sofros",
-    "Strawberry Flav",
-    "Susu Baru",
-    "Tepung",
-    "Tepung Beras Menir",
-    "Tepung Terigu Montana",
-    "Tepung Wilis",
-    "Vanillin",
-    "Ziproti",
+    "Aji Plus", "Air", "Baking Powder", "Beras Jagung", "BS Astor Coklat",
+    "Citric Acid", "Cocoa N6", "Cocoa Powder 301", "Coconut", "Dextrose",
+    "Flavour Chocolate 70Fm093883", "Flavour Coklat Baru", "Garam", "Gula",
+    "Jagung", "Lecithin", "Maltodextrine", "Margarin Menara Classic",
+    "Milk Bubuk", "Milk Flavour", "Minyak", "Pandan Flavour", "Pewarna",
+    "Pewarna Coklat", "Pewarna Pandan", "Pewarna Sunset Yellow",
+    "Plastik Dorong", "Sari Manis", "Sofros", "Strawberry Flav",
+    "Susu Baru", "Tepung", "Tepung Beras Menir", "Tepung Terigu Montana",
+    "Tepung Wilis", "Vanillin", "Ziproti"
   ].sort();
 
   // Elements
@@ -69,6 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabUtama = document.getElementById("tab-utama");
   const tabHitungan = document.getElementById("tab-hitungan");
   const bahanDatalist = document.getElementById("bahan-list");
+  // Elemen baru untuk save/load
+  const saveDataButton = document.getElementById("save-data-button");
+  const loadDataButton = document.getElementById("load-data-button");
+  const loadDataInput = document.getElementById("load-data-input");
 
   // State
   let masterIngredientList = [];
@@ -99,17 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Navigation
-  mainNavButtons.forEach((button) => {
+  mainNavButtons.forEach(button => {
     button.addEventListener("click", () => {
       const targetTabId = button.dataset.tab;
-      mainNavButtons.forEach((btn) => btn.classList.remove("active"));
+      mainNavButtons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
-
-      contentSections.forEach((section) => {
+      
+      contentSections.forEach(section => {
         if (section.id === `${targetTabId}-section`) {
-          section.classList.add("active");
+            section.classList.add("active");
         } else {
-          section.classList.remove("active");
+            section.classList.remove("active");
         }
       });
     });
@@ -136,33 +112,33 @@ document.addEventListener("DOMContentLoaded", () => {
       bahanDatalist.appendChild(option);
     });
   }
-
+  
   function renderMasterIngredientList() {
-    masterIngredientListUI.innerHTML = "";
-    const searchQuery = searchIngredientInput.value.toLowerCase();
-    const filteredList = masterIngredientList.filter((bahan) => bahan.toLowerCase().includes(searchQuery));
+      masterIngredientListUI.innerHTML = "";
+      const searchQuery = searchIngredientInput.value.toLowerCase();
+      const filteredList = masterIngredientList.filter(bahan => bahan.toLowerCase().includes(searchQuery));
 
-    if (filteredList.length === 0) {
-      masterIngredientListUI.innerHTML = "<li>Bahan tidak ditemukan.</li>";
-      return;
-    }
+      if (filteredList.length === 0) {
+          masterIngredientListUI.innerHTML = "<li>Bahan tidak ditemukan.</li>";
+          return;
+      }
 
-    filteredList.forEach((bahan) => {
-      const indexInMaster = masterIngredientList.indexOf(bahan); // Get original index for deletion
-      const li = document.createElement("li");
-      li.innerHTML = `
+      filteredList.forEach((bahan) => {
+          const indexInMaster = masterIngredientList.indexOf(bahan); // Get original index for deletion
+          const li = document.createElement("li");
+          li.innerHTML = `
             <span>${bahan}</span>
             <button class="delete-ingredient-btn btn-danger" data-index="${indexInMaster}">Hapus</button>
           `;
-      masterIngredientListUI.appendChild(li);
-    });
+          masterIngredientListUI.appendChild(li);
+      });
   }
 
   function addNewIngredient() {
     const newIngredient = newIngredientInput.value.trim();
     if (newIngredient === "") return alert("Nama bahan tidak boleh kosong.");
     if (masterIngredientList.some((bahan) => bahan.toLowerCase() === newIngredient.toLowerCase())) return alert("Bahan baku sudah ada dalam daftar.");
-
+    
     masterIngredientList.push(newIngredient);
     masterIngredientList.sort();
     localStorage.setItem("myIngredients", JSON.stringify(masterIngredientList));
@@ -173,28 +149,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function deleteIngredient(index) {
-    const ingredientToDelete = masterIngredientList[index];
-    if (confirm(`Apakah Anda yakin ingin menghapus "${ingredientToDelete}"? Bahan ini akan dihapus permanen.`)) {
-      masterIngredientList.splice(index, 1);
-      localStorage.setItem("myIngredients", JSON.stringify(masterIngredientList));
-      loadIngredients(); // Reload all lists
-    }
+      const ingredientToDelete = masterIngredientList[index];
+      if (confirm(`Apakah Anda yakin ingin menghapus "${ingredientToDelete}"? Bahan ini akan dihapus permanen.`)) {
+          masterIngredientList.splice(index, 1);
+          localStorage.setItem("myIngredients", JSON.stringify(masterIngredientList));
+          loadIngredients(); // Reload all lists
+      }
   }
 
   function updateIngredientNumbers() {
-    const rows = ingredientsList.querySelectorAll(".ingredient-row");
-    rows.forEach((row, index) => {
-      const numberEl = row.querySelector(".ingredient-number");
-      if (numberEl) {
-        numberEl.textContent = `${index + 1}.`;
-      }
-    });
+      const rows = ingredientsList.querySelectorAll(".ingredient-row");
+      rows.forEach((row, index) => {
+          const numberEl = row.querySelector('.ingredient-number');
+          if (numberEl) {
+              numberEl.textContent = `${index + 1}.`;
+          }
+      });
   }
 
   // Recipe Functions
   function initializeDefaultRecipe() {
     if (!localStorage.getItem("myRecipes")) {
-      localStorage.setItem("myRecipes", JSON.stringify([]));
+        localStorage.setItem("myRecipes", JSON.stringify([]));
     }
   }
 
@@ -237,8 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
     removeBtn.className = "remove-btn";
     removeBtn.textContent = "×";
     removeBtn.onclick = () => {
-      row.remove();
-      updateIngredientNumbers();
+        row.remove();
+        updateIngredientNumbers();
     };
 
     row.appendChild(numberSpan);
@@ -271,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentScaledRecipe = {
       title: recipeTitleInput.value || "Resep Tanpa Judul",
       ingredients: [],
-      isMainRecipe: false,
+      isMainRecipe: false
     };
     currentScaledRecipe.origin = {
       parentTitle: recipeTitleInput.value,
@@ -289,7 +265,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const name = row.querySelector(".ingredient-name").value;
       const originalQuantityInKg = parseFloat(row.querySelector(".quantity-input").value) || 0;
       const originalQuantityInGrams = originalQuantityInKg * 1000;
-      let scaledQuantityInGrams = operation === "multiply" ? originalQuantityInGrams * factor : originalQuantityInGrams / factor;
+      let scaledQuantityInGrams = operation === "multiply" 
+        ? originalQuantityInGrams * factor 
+        : originalQuantityInGrams / factor;
       scaledTotalInGrams += scaledQuantityInGrams;
       if (name) currentScaledRecipe.ingredients.push({ name: name, quantity: scaledQuantityInGrams });
       const displayUnit = resultUnitSelector.value;
@@ -363,11 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
       recipeEl.className = "saved-recipe-item";
       if (recipe.isMainRecipe) recipeEl.classList.add("main-recipe");
       const editDate = new Date(recipe.lastModified).toLocaleString("id-ID", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
+        day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
       });
       let originHTML = "";
       if (!recipe.isMainRecipe && recipe.origin) {
@@ -459,39 +433,124 @@ document.addEventListener("DOMContentLoaded", () => {
     totalWeightDisplay.textContent = "Total Berat Awal: 0 kg";
   }
 
-  // Event Listeners
+  // --- SAVE/LOAD DATA FUNCTIONS ---
+  function saveDataToFile() {
+      const recipes = JSON.parse(localStorage.getItem('myRecipes')) || [];
+      const ingredients = JSON.parse(localStorage.getItem('myIngredients')) || [];
+      const dataToSave = { recipes: recipes, ingredients: ingredients };
+      const jsonData = JSON.stringify(dataToSave, null, 2);
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const now = new Date();
+      const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+      link.download = `kalkulator_resep_backup_${timestamp}.json`;
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+      alert("Data berhasil disimpan!");
+  }
+
+  function triggerLoadData() {
+      loadDataInput.click();
+  }
+
+// --- FUNGSI LOAD DATA (VERSI MERGE + HAPUS DUPLIKAT RESEP) ---
+  function loadDataFromFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (file.type !== "application/json") {
+          alert("Gagal memuat: File harus berformat .json!");
+          event.target.value = null;
+          return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          try {
+              const loadedData = JSON.parse(e.target.result);
+              if (!loadedData || !Array.isArray(loadedData.recipes) || !Array.isArray(loadedData.ingredients)) {
+                   throw new Error("Format file tidak valid.");
+              }
+
+              if (confirm("Ini akan MENAMBAHKAN data dari file ke data yang ada (resep/bahan duplikat akan otomatis diabaikan). Lanjutkan?")) {
+
+                  // 1. Ambil data yang sudah ada
+                  const existingRecipes = JSON.parse(localStorage.getItem('myRecipes')) || [];
+                  const existingIngredients = JSON.parse(localStorage.getItem('myIngredients')) || [];
+
+                  // 2. Ambil data dari file
+                  const loadedRecipes = loadedData.recipes || [];
+                  const loadedIngredients = loadedData.ingredients || [];
+
+                  // 3. Gabungkan Bahan Baku (hapus duplikat pakai Set)
+                  const combinedIngredientsSet = new Set([...existingIngredients, ...loadedIngredients]);
+                  const mergedIngredients = Array.from(combinedIngredientsSet).sort();
+
+                  // --- LOGIKA HAPUS DUPLIKAT RESEP AKTIF ---
+                  // 4. Gabungkan Resep LAMA dan BARU jadi satu array
+                  const combinedRecipes = [...existingRecipes, ...loadedRecipes];
+                  // 5. Buat Set untuk mencatat judul unik (case-insensitive)
+                  const uniqueRecipeTitles = new Set();
+                  // 6. Filter array gabungan, hanya simpan resep dengan judul unik
+                  const mergedRecipesUnique = combinedRecipes.filter(recipe => {
+                      // Ambil judul, ubah ke huruf kecil, hapus spasi ekstra
+                      const normalizedTitle = recipe.title.toLowerCase().trim();
+                      // Cek apakah judul sudah ada di Set
+                      if (uniqueRecipeTitles.has(normalizedTitle)) {
+                          return false; // Lewati (duplikat)
+                      }
+                      // Jika belum ada, tambahkan ke Set dan simpan resepnya
+                      uniqueRecipeTitles.add(normalizedTitle);
+                      return true;
+                  });
+                  // --- AKHIR LOGIKA HAPUS DUPLIKAT ---
+
+
+                  // 7. Simpan data hasil gabungan ke localStorage
+                  localStorage.setItem('myRecipes', JSON.stringify(mergedRecipesUnique)); // Gunakan hasil filter
+                  localStorage.setItem('myIngredients', JSON.stringify(mergedIngredients));
+
+                  // 8. Muat ulang UI
+                  loadIngredients();
+                  loadSavedRecipes();
+                  cancelEdit();
+                  mainNavButtons[0].click();
+                  alert("Data berhasil digabungkan (duplikat diabaikan)!");
+              }
+
+          } catch (error) {
+              alert(`Gagal memuat data: ${error.message}`);
+          } finally {
+              event.target.value = null;
+          }
+      };
+      reader.onerror = function() {
+          alert("Gagal membaca file.");
+          event.target.value = null;
+      };
+      reader.readAsText(file);
+  }  // Event Listeners
   loginButton.addEventListener("click", handleLogin);
-  passwordInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleLogin();
-  });
-
+  passwordInput.addEventListener("keypress", (e) => { if (e.key === "Enter") handleLogin(); });
+  
   addNewIngredientBtn.addEventListener("click", addNewIngredient);
-  newIngredientInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") addNewIngredient();
-  });
-
+  newIngredientInput.addEventListener("keypress", (e) => { if (e.key === "Enter") addNewIngredient(); });
+  
   masterIngredientListUI.addEventListener("click", (e) => {
-    if (e.target.classList.contains("delete-ingredient-btn")) {
-      const index = parseInt(e.target.dataset.index, 10);
-      deleteIngredient(index);
-    }
+      if (e.target.classList.contains("delete-ingredient-btn")) {
+          const index = parseInt(e.target.dataset.index, 10);
+          deleteIngredient(index);
+      }
   });
 
   searchIngredientInput.addEventListener("input", renderMasterIngredientList);
   searchRecipeInput.addEventListener("input", loadSavedRecipes);
   saveRecipeBtn.addEventListener("click", () => saveRecipe(false));
   saveAsCopyBtn.addEventListener("click", () => saveRecipe(true));
-
-  addIngredientBtn.addEventListener("click", () => {
-    createIngredientRow();
-    updateIngredientNumbers();
-  });
-
+  addIngredientBtn.addEventListener("click", () => { createIngredientRow(); updateIngredientNumbers(); });
   calculateTotalBtn.addEventListener("click", calculateTotalWeight);
   totalUnitSelector.addEventListener("change", displayTotalWeight);
-  resultUnitSelector.addEventListener("change", () => {
-    if (currentScaledRecipe) generateScaledRecipe();
-  });
+  resultUnitSelector.addEventListener("change", () => { if (currentScaledRecipe) generateScaledRecipe(); });
   generateScaledBtn.addEventListener("click", generateScaledRecipe);
   cancelEditBtn.addEventListener("click", cancelEdit);
 
@@ -501,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tabHitungan.classList.remove("active");
     loadSavedRecipes();
   });
-
+  
   tabHitungan.addEventListener("click", () => {
     activeTab = "hitungan";
     tabHitungan.classList.add("active");
@@ -517,6 +576,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (button.classList.contains("edit-btn")) editRecipe(index);
     if (button.classList.contains("duplicate-btn")) duplicateRecipe(index);
   });
+  
+  // Listener baru untuk save/load
+  saveDataButton.addEventListener('click', saveDataToFile);
+  loadDataButton.addEventListener('click', triggerLoadData);
+  loadDataInput.addEventListener('change', loadDataFromFile);
 
   // Initialize
   checkLoginStatus();

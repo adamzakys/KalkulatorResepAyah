@@ -526,3 +526,39 @@ footer a:hover {
     padding: 8px 5px;
   }
 }
+
+#data-management-section {
+    border-left: 5px solid var(--primary-color);
+}
+
+#data-management-section h2 {
+    color: var(--primary-color);
+}
+
+.data-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap; /* Agar tombol tidak keluar layar di mobile */
+}
+
+.data-buttons button {
+    flex-grow: 1; /* Biarkan tombol mengisi ruang jika memungkinkan */
+}
+
+.warning-text {
+    font-size: 0.85em;
+    color: var(--danger-color);
+    background-color: #f8d7da; /* Light red */
+    border: 1px solid #f5c6cb; /* Red border */
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-top: 15px;
+}
+
+/* Tetap sembunyikan input file asli */
+#load-data-input {
+    display: none;
+}
+

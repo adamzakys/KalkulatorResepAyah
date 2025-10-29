@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catatan & Hitungan Resep</title>
+    <title>Kalkulator Resep Jajanan</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007bff"/>
@@ -19,7 +19,7 @@
     </div>
 
     <div id="app" class="hidden">
-      <h1>📝 Catatan & Hitungan Resep</h1>
+      <h1>📝 Kalkulator Resep Jajanan</h1>
 
       <div class="main-nav">
         <button class="main-nav-button active" data-tab="resep">📚 Resep</button>
@@ -100,45 +100,46 @@
           <button id="cancel-edit" class="btn-secondary btn-full hidden">Batal Edit</button>
         </div>
       </div>
-
+      
       <div id="bahan-section" class="content-section">
-        <div class="card">
-          <h2>Manajemen Bahan Baku</h2>
-          <p>Tambah atau hapus bahan baku dari daftar utama.</p>
-          <div class="input-group">
-            <label for="new-ingredient-input">Tambah Bahan Baru</label>
-            <div class="add-ingredient-form">
-              <input type="text" id="new-ingredient-input" placeholder="Contoh: Ekstrak Vanila" />
-              <button id="add-new-ingredient-btn" class="btn-success">Tambah</button>
-            </div>
+          <div class="card">
+              <h2>Manajemen Bahan Baku</h2>
+              <p>Tambah atau hapus bahan baku dari daftar utama.</p>
+              <div class="input-group">
+                <label for="new-ingredient-input">Tambah Bahan Baru</label>
+                <div class="add-ingredient-form">
+                    <input type="text" id="new-ingredient-input" placeholder="Contoh: Ekstrak Vanila">
+                    <button id="add-new-ingredient-btn" class="btn-success">Tambah</button>
+                </div>
+              </div>
+              <hr>
+              <h3>Daftar Bahan Saat Ini</h3>
+              <div class="input-group">
+                  <input type="search" id="search-ingredient-input" placeholder="🔍 Cari nama bahan...">
+              </div>
+              <ul id="master-ingredient-list-ui">
+                  </ul>
           </div>
-          <hr />
-          <h3>Daftar Bahan Saat Ini</h3>
-          <div class="input-group">
-            <input type="search" id="search-ingredient-input" placeholder="🔍 Cari nama bahan..." />
-          </div>
-          <ul id="master-ingredient-list-ui"></ul>
-        </div>
+      </div>
+
+      <div id="data-management-section" class="card">
+          <h2>💾 Manajemen Data</h2>
+          <p>Simpan data resep dan bahan baku Anda ke file, atau muat dari backup.</p>
+          <div class="data-buttons">
+              <button id="save-data-button" class="btn-success">Simpan Data ke File</button>
+              <button id="load-data-button" class="btn-warning">Muat Data dari File</button>
+              <input type="file" id="load-data-input" accept=".json" class="hidden"> </div>
+          <p class="warning-text"><strong>Peringatan:</strong> Memuat data akan menimpa semua resep dan bahan baku yang ada saat ini!</p>
       </div>
 
       <footer>
         <p>Developed by: <a href="mailto:adamzaky.dy@gmail.com">adamzaky.dy@gmail.com</a></p>
       </footer>
     </div>
-
+    
     <script src="app.js"></script>
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(registration => {
-                    console.log('ServiceWorker Terdaftar: ', registration.scope);
-                })
-                .catch(err => {
-                    console.log('Pendaftaran ServiceWorker Gagal: ', err);
-                });
-        });
-    }
-</script>
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
+    </script>
   </body>
 </html>
