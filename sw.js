@@ -1,4 +1,4 @@
-const CACHE_NAME = 'resep-calc-v2'; // Versi cache (ubah jika ada update besar)
+const CACHE_NAME = 'resep-calc-v3'; // Versi cache (ubah jika ada update besar)
 // Daftar file inti yang perlu disimpan agar bisa offline
 const urlsToCache = [
   '/', // Root
